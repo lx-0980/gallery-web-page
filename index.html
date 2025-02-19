@@ -1,143 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stylish Website with Background Image</title>
-    <style>
-        .header {
-            background-size: cover;
-            background-position: center;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            transition: background-image 1s ease-in-out;
-        }
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            padding: 20px;
-        }
-        .gallery-item {
-            text-align: center;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .gallery img {
-            width: 100%;
-            max-width: 200px;
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-            cursor: pointer;
-            border: 3px solid black;
-        }
-        .gallery img:hover {
-            transform: scale(1.1);
-        }
-        .date {
-            margin-top: 5px;
-            font-size: 14px;
-            color: gray;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 9999;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.9);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            max-width: 90%;
-            max-height: 90%;
-            border-radius: 10px;
-        }
-        .close {
-            color: #fff;
-            position: absolute;
-            top: 15px;
-            right: 35px;
-            font-size: 40px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stylish Website with Background Image</title>
+  <style>
+    .header {
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      transition: background-image 1s ease-in-out;
+    }
+    .header h1 {
+      display: inline-block;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: .15em solid orange;
+      font-size: 2em;
+      /* Adjust letter-spacing as needed */
+      animation: typing 2s steps(20, end) forwards, blink-caret 0.5s step-end infinite;
+    }
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    @keyframes blink-caret {
+      from, to { border-color: transparent; }
+      50% { border-color: orange; }
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      padding: 20px;
+    }
+    .gallery-item {
+      text-align: center;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .gallery img {
+      width: 100%;
+      max-width: 200px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      border: 3px solid black;
+    }
+    .gallery img:hover {
+      transform: scale(1.1);
+    }
+    .date {
+      margin-top: 5px;
+      font-size: 14px;
+      color: gray;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 10px;
+    }
+    .close {
+      color: #fff;
+      position: absolute;
+      top: 15px;
+      right: 35px;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-    <header class="header" id="header">
-        <h1>INDIAN ARMY</h1>
-    </header>
-    
-    <div class="gallery">
-        <div class="gallery-item">
-            <img src="https://i.postimg.cc/7PzDjYW3/soldier.jpg" onclick="openModal(this.src)">
-            <div class="date">18 Feb 2025</div>
-        </div>
-        <div class="gallery-item">
-            <img src="https://i.postimg.cc/ncYxcSZM/soldier1.jpg" onclick="openModal(this.src)">
-            <div class="date">18 Feb 2025</div>
-        </div>
-        <div class="gallery-item">
-            <img src="https://i.postimg.cc/FKnNXfvZ/soldier2.jpg" onclick="openModal(this.src)">
-            <div class="date">18 Feb 2025</div>
-        </div>
-        <div class="gallery-item">
-            <img src="https://i.postimg.cc/ydMKWwk3/soldier3.jpg" onclick="openModal(this.src)">
-            <div class="date">18 Feb 2025</div>
-        </div>
-        <div class="gallery-item">
-            <img src="https://i.postimg.cc/wTdHz8CS/army6.jpg" onclick="openModal(this.src)">
-            <div class="date">18 Feb 2025</div>
-        </div>
-    </div>
-    
-    <div id="myModal" class="modal">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <img class="modal-content" id="modalImg">
-    </div>
-    
-    <script>
-        const images = [
-            "https://i.postimg.cc/7PzDjYW3/soldier.jpg",
-            "https://i.postimg.cc/ncYxcSZM/soldier1.jpg",
-            "https://i.postimg.cc/FKnNXfvZ/soldier2.jpg",
-            "https://i.postimg.cc/ydMKWwk3/soldier3.jpg",
-            "https://i.postimg.cc/wTdHz8CS/army6.jpg"
-        ];
-        let currentIndex = 0;
+  <header class="header" id="header">
+    <h1>INDIAN ARMY</h1>
+  </header>
 
-        function changeBackground() {
-            document.getElementById("header").style.backgroundImage = `url('${images[currentIndex]}')`;
-            currentIndex = (currentIndex + 1) % images.length;
-        }
-        setInterval(changeBackground, 1000);
+  <div class="gallery">
+    <div class="gallery-item">
+      <img src="https://i.postimg.cc/7PzDjYW3/soldier.jpg" onclick="openModal(this.src)" alt="Photo 1">
+      <div class="date">18 Feb 2025</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://i.postimg.cc/ncYxcSZM/soldier1.jpg" onclick="openModal(this.src)" alt="Photo 2">
+      <div class="date">18 Feb 2025</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://i.postimg.cc/FKnNXfvZ/soldier2.jpg" onclick="openModal(this.src)" alt="Photo 3">
+      <div class="date">18 Feb 2025</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://i.postimg.cc/ydMKWwk3/soldier3.jpg" onclick="openModal(this.src)" alt="Photo 4">
+      <div class="date">18 Feb 2025</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://i.postimg.cc/wTdHz8CS/army6.jpg" onclick="openModal(this.src)" alt="Photo 5">
+      <div class="date">18 Feb 2025</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://i.postimg.cc/7PzDjYW3/soldier.jpg" onclick="openModal(this.src)" alt="Photo 6">
+      <div class="date">18 Feb 2025</div>
+    </div>
+  </div>
 
-        function openModal(imgSrc) {
-            document.getElementById("myModal").style.display = "flex";
-            document.getElementById("modalImg").src = imgSrc;
-        }
-        function closeModal() {
-            document.getElementById("myModal").style.display = "none";
-        }
-        document.addEventListener("DOMContentLoaded", function() {
-            document.getElementById("myModal").style.display = "none";
-            changeBackground();
-        });
-    </script>
+  <div id="myModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modalImg">
+  </div>
+
+  <script>
+    const images = [
+      "https://i.postimg.cc/7PzDjYW3/soldier.jpg",
+      "https://i.postimg.cc/ncYxcSZM/soldier1.jpg",
+      "https://i.postimg.cc/FKnNXfvZ/soldier2.jpg",
+      "https://i.postimg.cc/ydMKWwk3/soldier3.jpg",
+      "https://i.postimg.cc/wTdHz8CS/army6.jpg",
+      "https://i.postimg.cc/7PzDjYW3/soldier.jpg"
+    ];
+    let currentIndex = 0;
+
+    function changeBackground() {
+      document.getElementById("header").style.backgroundImage = `url('${images[currentIndex]}')`;
+      currentIndex = (currentIndex + 1) % images.length;
+    }
+    setInterval(changeBackground, 1000);
+
+    function openModal(imgSrc) {
+      document.getElementById("myModal").style.display = "flex";
+      document.getElementById("modalImg").src = imgSrc;
+    }
+    function closeModal() {
+      document.getElementById("myModal").style.display = "none";
+    }
+    document.addEventListener("DOMContentLoaded", function() {
+      document.getElementById("myModal").style.display = "none";
+      changeBackground();
+    });
+  </script>
 </body>
 </html>
