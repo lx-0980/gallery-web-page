@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stylish Website with Background Image</title>
+  <title>Stylish Website with Background Image & Music Player</title>
   <style>
     .header {
       background-size: cover;
@@ -23,7 +23,6 @@
       white-space: nowrap;
       border-right: .15em solid orange;
       font-size: 2em;
-      /* Adjust letter-spacing as needed */
       animation: typing 2s steps(20, end) forwards, blink-caret 0.5s step-end infinite;
     }
     @keyframes typing {
@@ -39,18 +38,18 @@
       grid-template-columns: repeat(2, 1fr);
       gap: 10px;
       padding: 20px;
+      justify-items: center;
     }
     .gallery-item {
       text-align: center;
-      position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
     .gallery img {
-      width: 100%;
-      max-width: 200px;
-      height: auto;
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s ease;
@@ -91,13 +90,27 @@
       font-weight: bold;
       cursor: pointer;
     }
+    /* Music player styling */
+    .music-player {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #32CD32; /* Lime Green */
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      z-index: 10000;
+    }
+    .music-player audio {
+      width: 200px;
+    }
   </style>
 </head>
 <body>
   <header class="header" id="header">
     <h1>INDIAN ARMY</h1>
   </header>
-
+  
   <div class="gallery">
     <div class="gallery-item">
       <img src="https://i.postimg.cc/7PzDjYW3/soldier.jpg" onclick="openModal(this.src)" alt="Photo 1">
@@ -124,12 +137,19 @@
       <div class="date">18 Feb 2025</div>
     </div>
   </div>
-
+  
   <div id="myModal" class="modal">
     <span class="close" onclick="closeModal()">&times;</span>
     <img class="modal-content" id="modalImg">
   </div>
-
+  
+  <div class="music-player">
+    <audio controls>
+      <source src="https://thelxcode.github.io/AudioPlayer/music/Hare_Hare__Hum_to_dil_se_hare__-_Lofi_Song_%5BSlowed___Reverb%5D___ShariqueKhan___Nic_Lofi(256k).mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+  
   <script>
     const images = [
       "https://i.postimg.cc/7PzDjYW3/soldier.jpg",
@@ -140,13 +160,13 @@
       "https://i.postimg.cc/7PzDjYW3/soldier.jpg"
     ];
     let currentIndex = 0;
-
+    
     function changeBackground() {
       document.getElementById("header").style.backgroundImage = `url('${images[currentIndex]}')`;
       currentIndex = (currentIndex + 1) % images.length;
     }
-    setInterval(changeBackground, 1000);
-
+    setInterval(changeBackground, 2000);
+    
     function openModal(imgSrc) {
       document.getElementById("myModal").style.display = "flex";
       document.getElementById("modalImg").src = imgSrc;
