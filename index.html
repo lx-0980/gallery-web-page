@@ -3,16 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stylish Website with Centered Layout, Music Player & Names Modal</title>
+  <title>Stylish Website with Background Image</title>
   <style>
-    /* General container for centering content */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      text-align: center;
-      padding: 20px;
-    }
-    /* Header Styles */
     .header {
       background-size: cover;
       background-position: center;
@@ -23,7 +15,7 @@
       color: white;
       font-family: Arial, sans-serif;
       text-align: center;
-      transition: background-image 1s ease-in-out;
+      transition: background-image 2s ease-in-out; /* updated to 2s */
     }
     .header h1 {
       display: inline-block;
@@ -41,56 +33,26 @@
       from, to { border-color: transparent; }
       50% { border-color: orange; }
     }
-    /* Music Player Styles */
-    .music-player {
-      margin: 20px auto;
-      background-color: #32CD32;
-      padding: 10px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      display: inline-block;
-    }
-    .music-player audio {
-      width: 200px;
-    }
-    /* Names Button Styles */
-    .names-button-container {
-      margin: 20px auto;
-      text-align: center;
-    }
-    .names-button-container button {
-      background-color: #32CD32;
-      border: none;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 5px;
-      font-size: 1em;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      transition: background-color 0.3s ease;
-    }
-    .names-button-container button:hover {
-      background-color: #2eb82e;
-    }
-    /* Gallery Styles */
     .gallery {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 10px;
-      margin: 0 auto;
+      padding: 20px;
+      justify-items: center;
     }
     .gallery-item {
       text-align: center;
+      position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
     .gallery img {
-      width: 200px;
-      height: 200px;
-      object-fit: cover;
+      width: 100%;
+      height: 250px; /* fixed height for uniform size */
+      object-fit: cover; /* ensures the image fills the container */
       border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s ease;
       cursor: pointer;
       border: 3px solid black;
@@ -103,7 +65,6 @@
       font-size: 14px;
       color: gray;
     }
-    /* Modal Styles for Full-screen Image */
     .modal {
       display: none;
       position: fixed;
@@ -112,7 +73,7 @@
       top: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0,0,0,0.9);
+      background-color: rgba(0, 0, 0, 0.9);
       justify-content: center;
       align-items: center;
     }
@@ -130,120 +91,45 @@
       font-weight: bold;
       cursor: pointer;
     }
-    /* Modal Styles for Names */
-    #namesModal {
-      display: none;
-      position: fixed;
-      z-index: 9999;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.8);
-      justify-content: center;
-      align-items: flex-start;
-      padding-top: 50px;
-    }
-    #namesModal .names-content {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      width: 80%;
-      max-width: 300px;
-      text-align: left;
-      font-family: 'Georgia', serif;
-      font-size: 1.2em;
-      color: #333;
-      animation: slideDown 0.5s ease-out;
-    }
-    #namesModal .name-item {
-      margin: 10px 0;
-      padding: 5px;
-      border-bottom: 1px dashed #ccc;
-    }
-    #namesModal .name-item:last-child {
-      border-bottom: none;
-    }
-    @keyframes slideDown {
-      from { transform: translateY(-20%); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-    /* Responsive adjustments */
-    @media (max-width: 600px) {
-      .gallery {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
   </style>
 </head>
 <body>
-  <!-- Header with background image and animated text -->
   <header class="header" id="header">
     <h1>INDIAN ARMY</h1>
   </header>
-  
-  <div class="container">
-    <!-- Music Player -->
-    <div class="music-player">
-      <audio controls>
-        <source src="https://thelxcode.github.io/AudioPlayer/music/Hare_Hare__Hum_to_dil_se_hare__-_Lofi_Song_%5BSlowed___Reverb%5D___ShariqueKhan___Nic_Lofi(256k).mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-      </audio>
+
+  <div class="gallery">
+    <div class="gallery-item">
+      <img src="https://i.postimg.cc/7PzDjYW3/soldier.jpg" onclick="openModal(this.src)" alt="Photo 1">
+      <div class="date">18 Feb 2025</div>
     </div>
-    
-    <!-- Names Button -->
-    <div class="names-button-container">
-      <button onclick="toggleNamesModal()">Names</button>
+    <div class="gallery-item">
+      <img src="https://i.postimg.cc/ncYxcSZM/soldier1.jpg" onclick="openModal(this.src)" alt="Photo 2">
+      <div class="date">18 Feb 2025</div>
     </div>
-    
-    <!-- Gallery of Posters -->
-    <div class="gallery">
-      <div class="gallery-item">
-        <img src="https://i.postimg.cc/7PzDjYW3/soldier.jpg" onclick="openModal(this.src)" alt="Photo 1">
-        <div class="date">18 Feb 2025</div>
-      </div>
-      <div class="gallery-item">
-        <img src="https://i.postimg.cc/ncYxcSZM/soldier1.jpg" onclick="openModal(this.src)" alt="Photo 2">
-        <div class="date">18 Feb 2025</div>
-      </div>
-      <div class="gallery-item">
-        <img src="https://i.postimg.cc/FKnNXfvZ/soldier2.jpg" onclick="openModal(this.src)" alt="Photo 3">
-        <div class="date">18 Feb 2025</div>
-      </div>
-      <div class="gallery-item">
-        <img src="https://i.postimg.cc/ydMKWwk3/soldier3.jpg" onclick="openModal(this.src)" alt="Photo 4">
-        <div class="date">18 Feb 2025</div>
-      </div>
-      <div class="gallery-item">
-        <img src="https://i.postimg.cc/wTdHz8CS/army6.jpg" onclick="openModal(this.src)" alt="Photo 5">
-        <div class="date">18 Feb 2025</div>
-      </div>
-      <div class="gallery-item">
-        <img src="https://i.postimg.cc/7PzDjYW3/soldier.jpg" onclick="openModal(this.src)" alt="Photo 6">
-        <div class="date">18 Feb 2025</div>
-      </div>
+    <div class="gallery-item">
+      <img src="https://i.postimg.cc/FKnNXfvZ/soldier2.jpg" onclick="openModal(this.src)" alt="Photo 3">
+      <div class="date">18 Feb 2025</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://i.postimg.cc/ydMKWwk3/soldier3.jpg" onclick="openModal(this.src)" alt="Photo 4">
+      <div class="date">18 Feb 2025</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://i.postimg.cc/wTdHz8CS/army6.jpg" onclick="openModal(this.src)" alt="Photo 5">
+      <div class="date">18 Feb 2025</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://i.postimg.cc/7PzDjYW3/soldier.jpg" onclick="openModal(this.src)" alt="Photo 6">
+      <div class="date">18 Feb 2025</div>
     </div>
   </div>
-  
-  <!-- Modal for full-screen image view -->
+
   <div id="myModal" class="modal">
     <span class="close" onclick="closeModal()">&times;</span>
     <img class="modal-content" id="modalImg">
   </div>
-  
-  <!-- Modal for Names -->
-  <div id="namesModal">
-    <span class="close" onclick="toggleNamesModal()">&times;</span>
-    <div class="names-content">
-      <div class="name-item">1. Ankit</div>
-      <div class="name-item">2. Arpita</div>
-      <div class="name-item">3. Bhanwar Lal</div>
-      <div class="name-item">4. Babu Lal</div>
-      <div class="name-item">5. Shankar Lal</div>
-      <div class="name-item">6. Shubham</div>
-    </div>
-  </div>
-  
+
   <script>
     const images = [
       "https://i.postimg.cc/7PzDjYW3/soldier.jpg",
@@ -254,13 +140,14 @@
       "https://i.postimg.cc/7PzDjYW3/soldier.jpg"
     ];
     let currentIndex = 0;
-    
+
     function changeBackground() {
       document.getElementById("header").style.backgroundImage = `url('${images[currentIndex]}')`;
       currentIndex = (currentIndex + 1) % images.length;
     }
+    // Change background every 2 seconds (2000ms)
     setInterval(changeBackground, 2000);
-    
+
     function openModal(imgSrc) {
       document.getElementById("myModal").style.display = "flex";
       document.getElementById("modalImg").src = imgSrc;
@@ -268,15 +155,8 @@
     function closeModal() {
       document.getElementById("myModal").style.display = "none";
     }
-    
-    function toggleNamesModal() {
-      const namesModal = document.getElementById("namesModal");
-      namesModal.style.display = (namesModal.style.display === "flex") ? "none" : "flex";
-    }
-    
     document.addEventListener("DOMContentLoaded", function() {
       document.getElementById("myModal").style.display = "none";
-      document.getElementById("namesModal").style.display = "none";
       changeBackground();
     });
   </script>
