@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stylish Website with Background Image, Music Player & Names Modal</title>
+  <title>Stylish Website with Centered Layout, Music Player & Names Modal</title>
   <style>
-    /* Container to center content on mobile and desktop */
+    /* General container for centering content */
     .container {
       max-width: 1200px;
       margin: 0 auto;
       text-align: center;
+      padding: 20px;
     }
     /* Header Styles */
     .header {
@@ -43,21 +44,19 @@
     /* Music Player Styles */
     .music-player {
       margin: 20px auto;
-      background-color: #32CD32; /* Lime Green */
+      background-color: #32CD32;
       padding: 10px;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      width: fit-content;
-      display: flex;
-      justify-content: center;
+      display: inline-block;
     }
     .music-player audio {
       width: 200px;
     }
     /* Names Button Styles */
     .names-button-container {
+      margin: 20px auto;
       text-align: center;
-      margin: 20px;
     }
     .names-button-container button {
       background-color: #32CD32;
@@ -78,8 +77,6 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 10px;
-      padding: 20px;
-      justify-items: center;
       margin: 0 auto;
     }
     .gallery-item {
@@ -93,7 +90,7 @@
       height: 200px;
       object-fit: cover;
       border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       transition: transform 0.3s ease;
       cursor: pointer;
       border: 3px solid black;
@@ -106,7 +103,7 @@
       font-size: 14px;
       color: gray;
     }
-    /* Modal Styles for Images */
+    /* Modal Styles for Full-screen Image */
     .modal {
       display: none;
       position: fixed;
@@ -115,7 +112,7 @@
       top: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.9);
+      background-color: rgba(0,0,0,0.9);
       justify-content: center;
       align-items: center;
     }
@@ -134,10 +131,24 @@
       cursor: pointer;
     }
     /* Modal Styles for Names */
+    #namesModal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 50px;
+    }
     #namesModal .names-content {
       background-color: #fff;
       padding: 20px;
       border-radius: 10px;
+      width: 80%;
       max-width: 300px;
       text-align: left;
       font-family: 'Georgia', serif;
@@ -145,18 +156,19 @@
       color: #333;
       animation: slideDown 0.5s ease-out;
     }
-    #namesModal .names-content ol {
-      margin: 0;
-      padding-left: 20px;
+    #namesModal .name-item {
+      margin: 10px 0;
+      padding: 5px;
+      border-bottom: 1px dashed #ccc;
     }
-    #namesModal .names-content li {
-      margin: 5px 0;
+    #namesModal .name-item:last-child {
+      border-bottom: none;
     }
     @keyframes slideDown {
       from { transform: translateY(-20%); opacity: 0; }
       to { transform: translateY(0); opacity: 1; }
     }
-    /* Responsive adjustments if needed */
+    /* Responsive adjustments */
     @media (max-width: 600px) {
       .gallery {
         grid-template-columns: 1fr 1fr;
@@ -171,7 +183,7 @@
   </header>
   
   <div class="container">
-    <!-- Music Player placed below header -->
+    <!-- Music Player -->
     <div class="music-player">
       <audio controls>
         <source src="https://thelxcode.github.io/AudioPlayer/music/Hare_Hare__Hum_to_dil_se_hare__-_Lofi_Song_%5BSlowed___Reverb%5D___ShariqueKhan___Nic_Lofi(256k).mp3" type="audio/mpeg">
@@ -179,7 +191,7 @@
       </audio>
     </div>
     
-    <!-- Names Button placed below Music Player -->
+    <!-- Names Button -->
     <div class="names-button-container">
       <button onclick="toggleNamesModal()">Names</button>
     </div>
@@ -220,17 +232,15 @@
   </div>
   
   <!-- Modal for Names -->
-  <div id="namesModal" class="modal">
+  <div id="namesModal">
     <span class="close" onclick="toggleNamesModal()">&times;</span>
     <div class="names-content">
-      <ol>
-        <li>Ankit</li>
-        <li>Arpita</li>
-        <li>Bhanwar Lal</li>
-        <li>Babu Lal</li>
-        <li>Shankar Lal</li>
-        <li>Shubham</li>
-      </ol>
+      <div class="name-item">1. Ankit</div>
+      <div class="name-item">2. Arpita</div>
+      <div class="name-item">3. Bhanwar Lal</div>
+      <div class="name-item">4. Babu Lal</div>
+      <div class="name-item">5. Shankar Lal</div>
+      <div class="name-item">6. Shubham</div>
     </div>
   </div>
   
@@ -261,11 +271,7 @@
     
     function toggleNamesModal() {
       const namesModal = document.getElementById("namesModal");
-      if (namesModal.style.display === "flex") {
-        namesModal.style.display = "none";
-      } else {
-        namesModal.style.display = "flex";
-      }
+      namesModal.style.display = (namesModal.style.display === "flex") ? "none" : "flex";
     }
     
     document.addEventListener("DOMContentLoaded", function() {
