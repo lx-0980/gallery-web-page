@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Responsive Website with Background Image</title>
+  <title>Responsive Website with Background Image & Music Player</title>
   <style>
+    /* Header styles */
     .header {
       background-size: cover;
       background-position: center;
@@ -33,6 +34,80 @@
       from, to { border-color: transparent; }
       50% { border-color: orange; }
     }
+
+    /* Music Player & Name List container */
+    .music-player-container {
+      text-align: center;
+      margin: 20px 0;
+      font-family: Arial, sans-serif;
+    }
+    .music-player {
+      display: inline-block;
+      background: #f1f1f1;
+      padding: 15px;
+      border-radius: 50%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+    .music-player:hover {
+      transform: scale(1.1);
+    }
+    .music-player button {
+      background: none;
+      border: none;
+      font-size: 2em;
+      color: #ff5722;
+      cursor: pointer;
+    }
+    #nameButton {
+      display: block;
+      margin: 20px auto;
+      background: #2196F3;
+      border: none;
+      color: white;
+      font-size: 1.2em;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    #nameButton:hover {
+      background: #1976D2;
+    }
+    .names-container {
+      display: none; /* initially hidden */
+      background-color: rgba(255,255,255,0.95);
+      border: 2px solid #ff5722;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 300px;
+      margin: 20px auto;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      position: relative;
+      font-family: Arial, sans-serif;
+    }
+    .names-container ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .names-container li {
+      font-size: 1.2em;
+      color: #333;
+      padding: 5px 0;
+    }
+    .names-container .close-names {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      font-size: 1.5em;
+      cursor: pointer;
+      color: #ff5722;
+    }
+
+    /* Gallery styles */
     .gallery {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -65,6 +140,8 @@
       font-size: 14px;
       color: gray;
     }
+
+    /* Modal for gallery images */
     .modal {
       display: none;
       position: fixed;
@@ -91,12 +168,12 @@
       font-weight: bold;
       cursor: pointer;
     }
+
     /* Responsive Media Queries */
     @media (max-width: 768px) {
       .header h1 {
         font-size: 1.8em;
       }
-      /* Gallery layout remains 2 columns on mobile */
     }
     @media (max-width: 480px) {
       .header h1 {
@@ -106,10 +183,46 @@
   </style>
 </head>
 <body>
+  <!-- Header with dynamic background -->
   <header class="header" id="header">
     <h1>INDIAN ARMY</h1>
   </header>
 
+  <!-- Music Player & Name List Container -->
+  <div class="music-player-container">
+    <!-- Music Player (centered) -->
+    <div class="music-player" onclick="togglePlayPause()">
+      <!-- Hidden audio element -->
+      <audio id="myAudio" src="https://thelxcode.github.io/AudioPlayer/music/Hare_Hare__Hum_to_dil_se_hare__-_Lofi_Song_%5BSlowed___Reverb%5D___ShariqueKhan___Nic_Lofi(256k).mp3" loop></audio>
+      <!-- Play/Pause Icon Button -->
+      <button id="playPauseBtn">&#9658;</button>
+    </div>
+
+    <!-- 'Name' Button -->
+    <button id="nameButton" onclick="toggleNames()">Name</button>
+
+    <!-- Names List Container -->
+    <div class="names-container" id="namesContainer">
+      <span class="close-names" onclick="toggleNames()">×</span>
+      <ul>
+        <li>Ankit</li>
+        <li>Arpita</li>
+        <li>Raju</li>
+        <li>Shankar</li>
+        <li>Ravindra</li>
+        <li>Shubham</li>
+        <li>Bhanwar Lal</li>
+        <li>Manoj</li>
+        <li>Kailash</li>
+        <li>kamlesh</li>
+        <li>shetan</li>
+        <li>Babu Lal</li>
+        <li>Narayan Lal</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Gallery of posters -->
   <div class="gallery">
     <div class="gallery-item">
       <img src="https://i.postimg.cc/7PzDjYW3/soldier.jpg" onclick="openModal(this.src)" alt="Photo 1">
@@ -137,12 +250,14 @@
     </div>
   </div>
 
+  <!-- Modal for gallery images -->
   <div id="myModal" class="modal">
     <span class="close" onclick="closeModal()">&times;</span>
     <img class="modal-content" id="modalImg">
   </div>
 
   <script>
+    // Background image rotation for header
     const images = [
       "https://i.postimg.cc/7PzDjYW3/soldier.jpg",
       "https://i.postimg.cc/ncYxcSZM/soldier1.jpg",
@@ -152,7 +267,6 @@
       "https://i.postimg.cc/7PzDjYW3/soldier.jpg"
     ];
     let currentIndex = 0;
-
     function changeBackground() {
       document.getElementById("header").style.backgroundImage = `url('${images[currentIndex]}')`;
       currentIndex = (currentIndex + 1) % images.length;
@@ -160,6 +274,7 @@
     // Background change every 2 seconds (2000ms)
     setInterval(changeBackground, 2000);
 
+    // Modal functions for gallery images
     function openModal(imgSrc) {
       document.getElementById("myModal").style.display = "flex";
       document.getElementById("modalImg").src = imgSrc;
@@ -167,6 +282,31 @@
     function closeModal() {
       document.getElementById("myModal").style.display = "none";
     }
+
+    // Music player toggle function
+    function togglePlayPause() {
+      var audio = document.getElementById("myAudio");
+      var btn = document.getElementById("playPauseBtn");
+      if (audio.paused) {
+        audio.play();
+        btn.innerHTML = "&#10074;&#10074;"; // Pause icon
+      } else {
+        audio.pause();
+        btn.innerHTML = "&#9658;"; // Play icon
+      }
+    }
+
+    // Toggle names list display
+    function toggleNames() {
+      var namesContainer = document.getElementById("namesContainer");
+      if (namesContainer.style.display === "block") {
+        namesContainer.style.display = "none";
+      } else {
+        namesContainer.style.display = "block";
+      }
+    }
+
+    // DOMContentLoaded initialization
     document.addEventListener("DOMContentLoaded", function() {
       document.getElementById("myModal").style.display = "none";
       changeBackground();
