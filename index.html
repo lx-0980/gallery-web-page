@@ -33,6 +33,20 @@
       from, to { border-color: transparent; }
       50% { border-color: orange; }
     }
+    /* Music player placed between header and gallery */
+    .music-player {
+      margin: 20px auto;
+      background-color: #32CD32; /* Lime Green */
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      width: fit-content;
+      display: flex;
+      justify-content: center;
+    }
+    .music-player audio {
+      width: 200px;
+    }
     .gallery {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -90,26 +104,20 @@
       font-weight: bold;
       cursor: pointer;
     }
-    /* Music player styling */
-    .music-player {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #32CD32; /* Lime Green */
-      padding: 10px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      z-index: 10000;
-    }
-    .music-player audio {
-      width: 200px;
-    }
   </style>
 </head>
 <body>
   <header class="header" id="header">
     <h1>INDIAN ARMY</h1>
   </header>
+  
+  <!-- Music Player placed right after the header -->
+  <div class="music-player">
+    <audio controls>
+      <source src="https://thelxcode.github.io/AudioPlayer/music/Hare_Hare__Hum_to_dil_se_hare__-_Lofi_Song_%5BSlowed___Reverb%5D___ShariqueKhan___Nic_Lofi(256k).mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
   
   <div class="gallery">
     <div class="gallery-item">
@@ -141,13 +149,6 @@
   <div id="myModal" class="modal">
     <span class="close" onclick="closeModal()">&times;</span>
     <img class="modal-content" id="modalImg">
-  </div>
-  
-  <div class="music-player">
-    <audio controls>
-      <source src="https://thelxcode.github.io/AudioPlayer/music/Hare_Hare__Hum_to_dil_se_hare__-_Lofi_Song_%5BSlowed___Reverb%5D___ShariqueKhan___Nic_Lofi(256k).mp3" type="audio/mpeg">
-      Your browser does not support the audio element.
-    </audio>
   </div>
   
   <script>
