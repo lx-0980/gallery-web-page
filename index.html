@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Responsive Website with Updated Gallery, Music & Header</title>
   <style>
-    /* Header styles with Typing Animation and Highlight */
+    /* Header styles with Typing Animation and Multiline Wrap */
     .header {
       background-size: cover;
       background-position: center;
@@ -21,14 +21,17 @@
     .header h1 {
       display: inline-block;
       overflow: hidden;
-      white-space: nowrap;
+      /* Allow text to wrap onto multiple lines if needed */
+      white-space: pre-wrap;
+      word-break: break-word;
       border-right: .15em solid orange;
       font-size: 2em;
       padding: 10px;
       background-color: rgba(0, 0, 0, 0.6);
       border-radius: 5px;
-      max-width: 90vw; /* ensures text doesn't overflow screen */
-      animation: typing 3s steps(40, end) forwards, blink-caret 0.75s step-end infinite;
+      max-width: 90vw;
+      /* Adjust animation duration and steps according to text length */
+      animation: typing 4s steps(70, end) forwards, blink-caret 0.75s step-end infinite;
     }
     @keyframes typing {
       from { width: 0; }
@@ -460,10 +463,10 @@
       var btn = document.getElementById("playPauseBtn");
       if (audio.paused) {
         audio.play();
-        btn.innerHTML = "&#10074;&#10074;";
+        btn.innerHTML = "&#10074;&#10074;"; // Pause icon
       } else {
         audio.pause();
-        btn.innerHTML = "&#9658;";
+        btn.innerHTML = "&#9658;"; // Play icon
       }
     }
 
