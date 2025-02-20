@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Responsive Website with Typing Animation & Working Music Player</title>
+  <title>Responsive Website with Typing Animation, Music & Gallery</title>
   <style>
     /* Header styles with Typing Animation (Multiline) */
     .header {
@@ -40,7 +40,7 @@
       50% { border-color: orange; }
     }
 
-    /* Music Player & Names List container */
+    /* Music Player container */
     .music-player-container {
       text-align: center;
       margin: 20px 0;
@@ -79,65 +79,6 @@
         transform: scale(1);
         box-shadow: 0 0 5px rgba(255,87,34, 0.5);
       }
-    }
-    #nameButton {
-      display: block;
-      margin: 20px auto;
-      background: #2196F3;
-      border: none;
-      color: white;
-      font-size: 1.2em;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    #nameButton:hover {
-      background: #1976D2;
-    }
-    .names-container {
-      display: none;
-      background-color: rgba(255,255,255,0.95);
-      border: 2px solid #ff5722;
-      padding: 20px;
-      border-radius: 10px;
-      text-align: center;
-      max-width: 500px;
-      margin: 20px auto;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      position: relative;
-      font-family: Arial, sans-serif;
-    }
-    .names-container .close-names {
-      position: absolute;
-      top: 5px;
-      right: 10px;
-      font-size: 1.5em;
-      cursor: pointer;
-      color: #ff5722;
-    }
-    /* Names List Layout */
-    .names-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 20px;
-    }
-    .name-row {
-      display: flex;
-      justify-content: space-around;
-      gap: 10px;
-    }
-    .name-item {
-      background: #f1f1f1;
-      padding: 10px;
-      border-radius: 5px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      font-size: 1.1em;
-      color: #333;
-      flex: 1;
-      text-align: center;
-      margin: 0 5px;
     }
 
     /* Gallery styles */
@@ -221,95 +162,12 @@
     <h1>राजकीय उच्च माध्यमिक विद्यालय अचलपुर, प्रतापगढ़ (राज) कक्षा 12वीं (2024 - 25)</h1>
   </header>
 
-  <!-- Music Player & Names List Container -->
+  <!-- Music Player Container -->
   <div class="music-player-container">
-    <!-- Music Player -->
     <div class="music-player" onclick="togglePlayPause()">
       <!-- Updated Music Link using a direct raw file link -->
       <audio id="myAudio" src="https://raw.githubusercontent.com/thelxcode/AudioPlayer/main/music/Kuch_sala_baad_yaara.mp3" loop></audio>
       <button id="playPauseBtn">&#9658;</button>
-    </div>
-
-    <!-- 'Name' Button -->
-    <button id="nameButton" onclick="toggleNames()">Name</button>
-
-    <!-- Names List Container -->
-    <div class="names-container" id="namesContainer">
-      <span class="close-names" onclick="toggleNames()">×</span>
-      <div class="names-list">
-        <div class="name-row">
-          <div class="name-item">Angur Bala</div>
-          <div class="name-item">Mona</div>
-        </div>
-        <div class="name-row">
-          <div class="name-item">Anju Kumari</div>
-          <div class="name-item">Narayan Lal</div>
-        </div>
-        <div class="name-row">
-          <div class="name-item">Ankit</div>
-          <div class="name-item">Nidhi</div>
-        </div>
-        <div class="name-row">
-          <div class="name-item">Arpita</div>
-          <div class="name-item">Nirmala Kumari</div>
-        </div>
-        <div class="name-row">
-          <div class="name-item">Asha Kumari</div>
-          <div class="name-item">Nisha</div>
-        </div>
-        <div class="name-row">
-          <div class="name-item">Babulal</div>
-          <div class="name-item">Pooja Kumari</div>
-        </div>
-        <div class="name-row">
-          <div class="name-item">Bhanwar Lal</div>
-          <div class="name-item">Pooja</div>
-        </div>
-        <div class="name-row">
-          <div class="name-item">Govind</div>
-          <div class="name-item">Priyal</div>
-        </div>
-        <div class="name-row">
-          <div class="name-item">Ishwar Lal</div>
-          <div class="name-item">Pushpa</div>
-        </div>
-        <div class="name-row">
-          <div class="name-item">Kamlesh</div>
-          <div class="name-item">Radha</div>
-        </div>
-        <div class="name-row">
-          <div class="name-item">Karishma Kumari</div>
-          <div class="name-item">Radhika</div>
-        </div>
-        <div class="name-row">
-          <div class="name-item">Karishma</div>
-          <div class="name-item">Raju</div>
-        </div>
-        <div class="name-row">
-          <div class="name-item">Khushabu</div>
-          <div class="name-item">Ravindra</div>
-        </div>
-        <div class="name-row">
-          <div class="name-item">Kiran</div>
-          <div class="name-item">Rinku</div>
-        </div>
-        <div class="name-row">
-          <div class="name-item">Kripa Kumari</div>
-          <div class="name-item">Shankar Lal</div>
-        </div>
-        <div class="name-row">
-          <div class="name-item">Kripa</div>
-          <div class="name-item">Shetan</div>
-        </div>
-        <div class="name-row">
-          <div class="name-item">Krishna</div>
-          <div class="name-item">Shubham</div>
-        </div>
-        <div class="name-row">
-          <div class="name-item">Leela Kumari</div>
-          <div class="name-item">Tulsi</div>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -466,12 +324,6 @@
         audio.pause();
         btn.innerHTML = "&#9658;"; // Play icon
       }
-    }
-
-    // Toggle names list display
-    function toggleNames() {
-      var namesContainer = document.getElementById("namesContainer");
-      namesContainer.style.display = namesContainer.style.display === "block" ? "none" : "block";
     }
 
     document.addEventListener("DOMContentLoaded", function() {
