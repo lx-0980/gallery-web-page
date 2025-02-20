@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Responsive Website with Updated Gallery, Music & Header</title>
   <style>
-    /* Header styles with Typing Animation and Multiline Wrap */
+    /* Header styles with Typing Animation (Multiline) */
     .header {
       background-size: cover;
       background-position: center;
@@ -21,7 +21,7 @@
     .header h1 {
       display: inline-block;
       overflow: hidden;
-      /* Allow text to wrap onto multiple lines if needed */
+      /* Allow text to wrap into multiple lines if needed */
       white-space: pre-wrap;
       word-break: break-word;
       border-right: .15em solid orange;
@@ -30,12 +30,12 @@
       background-color: rgba(0, 0, 0, 0.6);
       border-radius: 5px;
       max-width: 90vw;
-      /* Adjust animation duration and steps according to text length */
+      /* Animate max-width from 0 to 90vw to create a typing effect */
       animation: typing 4s steps(70, end) forwards, blink-caret 0.75s step-end infinite;
     }
     @keyframes typing {
-      from { width: 0; }
-      to { width: 100%; }
+      from { max-width: 0; }
+      to { max-width: 90vw; }
     }
     @keyframes blink-caret {
       from, to { border-color: transparent; }
