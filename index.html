@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Responsive Website with Updated Gallery, Music & Header</title>
   <style>
-    /* Header styles with Typing Animation */
+    /* Header styles with Typing Animation and Highlight */
     .header {
       background-size: cover;
       background-position: center;
@@ -24,7 +24,10 @@
       white-space: nowrap;
       border-right: .15em solid orange;
       font-size: 2em;
-      /* Adjust animation duration and steps as per text length */
+      padding: 10px;
+      background-color: rgba(0, 0, 0, 0.6);
+      border-radius: 5px;
+      max-width: 90vw; /* ensures text doesn't overflow screen */
       animation: typing 3s steps(40, end) forwards, blink-caret 0.75s step-end infinite;
     }
     @keyframes typing {
@@ -221,8 +224,8 @@
   <div class="music-player-container">
     <!-- Music Player -->
     <div class="music-player" onclick="togglePlayPause()">
-      <!-- New Music Link Updated Here -->
-      <audio id="myAudio" src="https://github.com/thelx0980/indian-army/blob/main/music/Kuch_sala_baad_yaara.mp3" loop></audio>
+      <!-- Updated Music Link -->
+      <audio id="myAudio" src="https://github.com/thelxcode/AudioPlayer/blob/main/music/Kuch_sala_baad_yaara.mp3" loop></audio>
       <button id="playPauseBtn">&#9658;</button>
     </div>
 
@@ -410,7 +413,7 @@
   </div>
 
   <script>
-    // Updated images array for header background rotation (top posters included at start)
+    // Updated images array for header background rotation (including top posters)
     const images = [
       "https://i.ibb.co/6cMSLWt6/Image-2025-02-19-17-48-14.jpg", // top poster
       "https://i.ibb.co/LhQfcGNT/Image-2025-02-19-17-43-01.jpg", // top poster
@@ -457,10 +460,10 @@
       var btn = document.getElementById("playPauseBtn");
       if (audio.paused) {
         audio.play();
-        btn.innerHTML = "&#10074;&#10074;"; // Pause icon
+        btn.innerHTML = "&#10074;&#10074;";
       } else {
         audio.pause();
-        btn.innerHTML = "&#9658;"; // Play icon
+        btn.innerHTML = "&#9658;";
       }
     }
 
