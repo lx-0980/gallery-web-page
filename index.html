@@ -19,6 +19,11 @@
   <!-- Modal for gallery images -->
   <div id="myModal" class="modal">
     <span class="close" onclick="closeModal()">&times;</span>
+
+    <!-- Navigation arrows -->
+    <span class="modal-nav modal-prev" onclick="prevImage()">&#10094;</span>
+    <span class="modal-nav modal-next" onclick="nextImage()">&#10095;</span>
+
     <img class="modal-content" id="modalImg">
     <a id="downloadBtn" class="download-btn" download>Download Photo</a>
   </div>
