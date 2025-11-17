@@ -32,11 +32,15 @@
 /* Gallery */
 .gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 15px;
   padding: 20px;
   justify-items: center;
 }
+
+/* Responsive grid columns */
+@media (min-width: 1200px) { .gallery { grid-template-columns: repeat(4, 1fr); } } /* Desktop */
+@media (min-width: 768px) and (max-width: 1199px) { .gallery { grid-template-columns: repeat(3, 1fr); } } /* Tablet */
+@media (max-width: 767px) { .gallery { grid-template-columns: repeat(2, 1fr); } } /* Mobile */
 
 .gallery img {
   width: 100%;
@@ -49,7 +53,7 @@
   cursor: pointer;
 }
 
-.gallery img:hover { transform: scale(1.1); }
+.gallery img:hover { transform: scale(1.05); }
 
 .date {
   margin-top: 5px;
@@ -65,17 +69,18 @@
   z-index: 9999;
   left: 0; top: 0;
   width: 100%; height: 100%;
-  background: rgba(0,0,0,0.9);
+  background: rgba(0,0,0,0.95);
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .modal-content {
   max-width: 90%;
   max-height: 80%;
   border-radius: 10px;
-  position: relative;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .close {
@@ -86,30 +91,6 @@
   right: 35px;
   cursor: pointer;
 }
-
-/* Modal navigation arrows */
-.modal-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 50px;
-  color: white;
-  background: rgba(0,0,0,0.4);
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  user-select: none;
-  transition: background 0.3s;
-}
-
-.modal-nav:hover { background: rgba(0,0,0,0.7); }
-
-.modal-prev { left: 10px; }
-.modal-next { right: 10px; }
 
 /* Download Button */
 .download-btn {
@@ -123,14 +104,28 @@
   font-weight: bold;
 }
 
-/* Responsive */
+/* Modal swipe helper (optional invisible for mobile swipe) */
+.modal-swipe {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  top: 0;
+  z-index: 9998;
+}
+
+/* Left half swipe area */
+.modal-swipe-left { left: 0; }
+
+/* Right half swipe area */
+.modal-swipe-right { right: 0; }
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
   .header h1 { font-size: 1.8em; }
   .gallery img { height: 200px; }
-  .modal-nav { font-size: 40px; width: 50px; height: 50px; }
 }
+
 @media (max-width: 480px) {
   .header h1 { font-size: 1.5em; }
   .gallery img { height: 150px; }
-  .modal-nav { font-size: 30px; width: 40px; height: 40px; }
 }
