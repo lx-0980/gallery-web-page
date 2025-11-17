@@ -21,14 +21,27 @@ galleryImages.forEach(item => {
 
 // ---------- Modal ----------
 function openModal(imgSrc) {
-  document.getElementById("myModal").style.display = "flex";
-  document.getElementById("modalImg").src = imgSrc;
-  document.getElementById("downloadBtn").href = imgSrc;
-}
+  const modal = document.getElementById("myModal");
+  const modalImg = document.getElementById("modalImg");
+  const downloadBtn = document.getElementById("downloadBtn");
 
-function closeModal() {
-  document.getElementById("myModal").style.display = "none";
-}
+  modal.style.display = "flex";
+  modalImg.src = imgSrc;
 
-// ---------- Init ----------
-document.addEventListener("DOMContentLoaded", changeBackground);
+  // Trigger download using fetch + blob
+  downloadBtn.onclick = () => {
+    fetch(imgSrc)
+      .then(response => response.blob())
+      .then(blob => {
+        const blobUrl = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = imgSrc.split('/').pop(); // filename from URL
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(blobUrl);
+      })
+      .catch(() => alert('Download failed due to CORS restrictions.'));
+  };
+}
