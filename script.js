@@ -45,3 +45,10 @@ function openModal(imgSrc) {
       .catch(() => alert('Download failed due to CORS restrictions.'));
   };
 }
+
+function closeModal() {
+  document.getElementById("myModal").style.display = "none";
+}
+
+// ---------- Init ----------
+document.addEventListener("DOMContentLoaded", changeBackground);
