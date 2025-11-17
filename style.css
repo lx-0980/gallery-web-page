@@ -32,8 +32,8 @@
 /* Gallery */
 .gallery {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
   padding: 20px;
   justify-items: center;
 }
@@ -55,6 +55,7 @@
   margin-top: 5px;
   color: gray;
   font-size: 14px;
+  text-align: center;
 }
 
 /* Modal */
@@ -74,6 +75,7 @@
   max-width: 90%;
   max-height: 80%;
   border-radius: 10px;
+  position: relative;
 }
 
 .close {
@@ -84,6 +86,30 @@
   right: 35px;
   cursor: pointer;
 }
+
+/* Modal navigation arrows */
+.modal-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 50px;
+  color: white;
+  background: rgba(0,0,0,0.4);
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.3s;
+}
+
+.modal-nav:hover { background: rgba(0,0,0,0.7); }
+
+.modal-prev { left: 10px; }
+.modal-next { right: 10px; }
 
 /* Download Button */
 .download-btn {
@@ -98,5 +124,13 @@
 }
 
 /* Responsive */
-@media (max-width: 768px) { .header h1 { font-size: 1.8em; } }
-@media (max-width: 480px) { .header h1 { font-size: 1.5em; } }
+@media (max-width: 768px) {
+  .header h1 { font-size: 1.8em; }
+  .gallery img { height: 200px; }
+  .modal-nav { font-size: 40px; width: 50px; height: 50px; }
+}
+@media (max-width: 480px) {
+  .header h1 { font-size: 1.5em; }
+  .gallery img { height: 150px; }
+  .modal-nav { font-size: 30px; width: 40px; height: 40px; }
+}
