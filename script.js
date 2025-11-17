@@ -1,3 +1,22 @@
+// ---------- Header Typing Animation ----------
+document.addEventListener("DOMContentLoaded", () => {
+  const headerText = "राजकीय उच्च माध्यमिक विद्यालय अचलपुर, प्रतापगढ़ (राज) कक्षा 12वीं (2024 - 25)";
+  const header = document.querySelector(".header h1");
+  let i = 0;
+
+  function typeWriter() {
+    if (i < headerText.length) {
+      header.innerHTML += headerText.charAt(i);
+      i++;
+      setTimeout(typeWriter, 50); // typing speed
+    } else {
+      header.classList.add("blink"); // add blinking caret
+    }
+  }
+
+  typeWriter();
+});
+
 // ---------- Background Rotation ----------
 let bgIndex = 0;
 function changeBackground() {
@@ -88,7 +107,7 @@ function prevImage() {
   document.getElementById("modalImg").src = galleryImages[currentIndex].full;
 }
 
-// ---------- Touch Swipe Functions ----------
+// ---------- Touch Swipe ----------
 function touchStart(e) { startX = e.changedTouches[0].screenX; }
 function touchEnd(e) {
   endX = e.changedTouches[0].screenX;
@@ -96,7 +115,7 @@ function touchEnd(e) {
   if (endX - startX > 50) prevImage();      // swipe right
 }
 
-// Keyboard support
+// ---------- Keyboard Support ----------
 window.addEventListener("keydown", e => {
   if (document.getElementById("myModal").style.display === "flex") {
     if (e.key === "ArrowRight") nextImage();
@@ -107,6 +126,3 @@ window.addEventListener("keydown", e => {
 
 // ---------- Preload Background Images ----------
 bgImages.forEach(url => { const img = new Image(); img.src = url; });
-
-// ---------- Init ----------
-document.addEventListener("DOMContentLoaded", changeBackground);
