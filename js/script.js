@@ -1,4 +1,6 @@
-// ---------- Header Typing Animation ----------
+/* ------------------------------------------------------------
+   HEADER TYPING
+------------------------------------------------------------ */
 document.addEventListener("DOMContentLoaded", () => {
   const headerText = "राजकीय उच्च माध्यमिक विद्यालय अचलपुर, प्रतापगढ़ (राज) कक्षा 12वीं (2024 - 25)";
   const header = document.querySelector(".header h1");
@@ -13,11 +15,13 @@ document.addEventListener("DOMContentLoaded", () => {
       header.classList.add("blink");
     }
   }
-
   typeWriter();
 });
 
-// ---------- Background Rotation ----------
+
+/* ------------------------------------------------------------
+   BACKGROUND ROTATION
+------------------------------------------------------------ */
 let bgIndex = 0;
 function changeBackground() {
   document.getElementById("header").style.backgroundImage = `url('${bgImages[bgIndex]}')`;
@@ -25,7 +29,10 @@ function changeBackground() {
 }
 setInterval(changeBackground, 2000);
 
-// ---------- Load Gallery ----------
+
+/* ------------------------------------------------------------
+   LOAD GALLERY
+------------------------------------------------------------ */
 const galleryContainer = document.getElementById("galleryContainer");
 const fragment = document.createDocumentFragment();
 
@@ -38,16 +45,18 @@ galleryImages.forEach((item, index) => {
   `;
   fragment.appendChild(div);
 });
-
 galleryContainer.appendChild(fragment);
 
-// ---------- Lazy Loading ----------
-const observer = new IntersectionObserver((entries, observer) => {
+
+/* ------------------------------------------------------------
+   LAZY LOADING
+------------------------------------------------------------ */
+const observer = new IntersectionObserver((entries, obs) => {
   entries.forEach(entry => {
-    if(entry.isIntersecting) {
+    if (entry.isIntersecting) {
       const img = entry.target;
       img.src = img.dataset.src;
-      observer.unobserve(img);
+      obs.unobserve(img);
     }
   });
 }, { rootMargin: "50px" });
@@ -55,116 +64,97 @@ const observer = new IntersectionObserver((entries, observer) => {
 document.querySelectorAll(".gallery-item img").forEach(img => observer.observe(img));
 
 
-// ---------- Modal + Zoom + Swipe ----------
+/* ------------------------------------------------------------
+   MODAL + INSTAGRAM-STYLE SWIPE / ZOOM
+------------------------------------------------------------ */
+
 let currentIndex = 0;
 
-let startX = 0;
-let endX = 0;
-
-let scale = 1;
-let isZoomed = false;
-let initialDistance = 0;
-
-const modalImg = document.getElementById("modalImg");
-
-function openModal(index) {
-  currentIndex = index;
-
-  const modal = document.getElementById("myModal");
-  const downloadBtn = document.getElementById("downloadBtn");
-
-  modal.style.display = "flex";
-  modalImg.src = galleryImages[currentIndex].full;
-
-  // Reset zoom
-  modalImg.style.transform = "scale(1)";
-  scale = 1;
-  isZoomed = false;
-
-  modalImg.addEventListener("touchstart", touchStartHandler);
-  modalImg.addEventListener("touchmove", touchMoveHandler);
-  modalImg.addEventListener("touchend", touchEndHandler);
-
-  downloadBtn.onclick = () => {
-    fetch(galleryImages[currentIndex].full)
-      .then(r => r.blob())
-      .then(blob => {
-        const blobUrl = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = blobUrl;
-        a.download = galleryImages[currentIndex].full.split('/').pop();
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        URL.revokeObjectURL(blobUrl);
-      })
-      .catch(() => alert('Download failed due to CORS restrictions.'));
-  };
-}
-
-function closeModal() {
-  modalImg.removeEventListener("touchstart", touchStartHandler);
-  modalImg.removeEventListener("touchmove", touchMoveHandler);
-  modalImg.removeEventListener("touchend", touchEndHandler);
-  document.getElementById("myModal").style.display = "none";
-}
-
-function nextImage() {
-  currentIndex = (currentIndex + 1) % galleryImages.length;
-  modalImg.src = galleryImages[currentIndex].full;
-  modalImg.style.transform = "scale(1)";
-  scale = 1;
-  isZoomed = false;
-}
-
-function prevImage() {
-  currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
-  modalImg.src = galleryImages[currentIndex].full;
-  modalImg.style.transform = "scale(1)";
-  scale = 1;
-  isZoomed = false;
-}
-
-/* ---------------- INSTAGRAM STYLE ZOOM + PAN + SWIPE ---------------- */
-
+/* gesture variables */
 let startX = 0;
 let startY = 0;
 let endX = 0;
-let endY = 0;
+
+let imgX = 0;
+let imgY = 0;
+let lastX = 0;
+let lastY = 0;
 
 let scale = 1;
-let isZoomed = false;
 let initialDistance = 0;
+let isZoomed = false;
 
-let imgX = 0;     // Current pan X
-let imgY = 0;     // Current pan Y
-let lastX = 0;    // Previous pan X
-let lastY = 0;    // Previous pan Y
-
-let isDraggingImage = false;
-let dragStartY = 0; // For swipe-down to close
+let dragStartY = 0;
 let totalDragY = 0;
+
+const SWIPE_MIN = 120;
 
 const modal = document.getElementById("myModal");
 const modalImg = document.getElementById("modalImg");
 
 
-// ---------------- TOUCH START ----------------
+/* ------------------------------------------------------------
+   OPEN MODAL
+------------------------------------------------------------ */
+function openModal(index) {
+  currentIndex = index;
+
+  modal.style.display = "flex";
+  modalImg.src = galleryImages[currentIndex].full;
+
+  resetZoom();
+
+  modalImg.addEventListener("touchstart", touchStartHandler, { passive: false });
+  modalImg.addEventListener("touchmove", touchMoveHandler, { passive: false });
+  modalImg.addEventListener("touchend", touchEndHandler);
+
+  const downloadBtn = document.getElementById("downloadBtn");
+  downloadBtn.onclick = () => downloadImage(galleryImages[currentIndex].full);
+}
+
+
+/* ------------------------------------------------------------
+   CLOSE MODAL
+------------------------------------------------------------ */
+function closeModal() {
+  modal.style.display = "none";
+
+  modalImg.removeEventListener("touchstart", touchStartHandler);
+  modalImg.removeEventListener("touchmove", touchMoveHandler);
+  modalImg.removeEventListener("touchend", touchEndHandler);
+
+  resetZoom();
+}
+
+
+/* ------------------------------------------------------------
+   RESET ZOOM
+------------------------------------------------------------ */
+function resetZoom() {
+  scale = 1;
+  imgX = 0;
+  imgY = 0;
+  isZoomed = false;
+  modalImg.style.transform = "translate(0px, 0px) scale(1)";
+}
+
+
+/* ------------------------------------------------------------
+   TOUCH START
+------------------------------------------------------------ */
 function touchStartHandler(e) {
 
-  // Double tap zoom
+  // Double TAP zoom
   if (e.touches.length === 1) {
     const now = Date.now();
-    if (modalImg.lastTapTime && (now - modalImg.lastTapTime < 300)) {
+    if (modalImg.lastTapTime && now - modalImg.lastTapTime < 300) {
       toggleDoubleTapZoom(e.touches[0]);
-      e.preventDefault();
       return;
     }
     modalImg.lastTapTime = now;
   }
 
-  
-  // 2-finger pinch start
+  // Pinch zoom start
   if (e.touches.length === 2) {
     const dx = e.touches[0].pageX - e.touches[1].pageX;
     const dy = e.touches[0].pageY - e.touches[1].pageY;
@@ -172,9 +162,8 @@ function touchStartHandler(e) {
     return;
   }
 
-  // 1 finger → swipe or drag start
+  // 1 finger → swipe or pan
   if (e.touches.length === 1) {
-
     startX = e.touches[0].clientX;
     startY = e.touches[0].clientY;
 
@@ -187,30 +176,27 @@ function touchStartHandler(e) {
 }
 
 
-
-// ---------------- TOUCH MOVE ----------------
+/* ------------------------------------------------------------
+   TOUCH MOVE
+------------------------------------------------------------ */
 function touchMoveHandler(e) {
 
-  // ----- PINCH ZOOM -----
+  // PINCH ZOOM
   if (e.touches.length === 2) {
     const dx = e.touches[0].pageX - e.touches[1].pageX;
     const dy = e.touches[0].pageY - e.touches[1].pageY;
     const newDistance = Math.sqrt(dx * dx + dy * dy);
 
-    scale = newDistance / initialDistance;
-
-    if (scale > 1.05) isZoomed = true;
+    scale = Math.max(1, newDistance / initialDistance);
+    if (scale > 1.03) isZoomed = true;
 
     updateTransform();
-    
     e.preventDefault();
     return;
   }
 
-
-  // ----- WHEN ZOOMED → PAN IMAGE -----
+  // PAN (when zoomed)
   if (isZoomed && e.touches.length === 1) {
-
     const moveX = e.touches[0].clientX - startX;
     const moveY = e.touches[0].clientY - startY;
 
@@ -218,82 +204,99 @@ function touchMoveHandler(e) {
     imgY = lastY + moveY;
 
     updateTransform();
+    e.preventDefault();
     return;
   }
 
-
-  // ----- SWIPE DOWN TO CLOSE -----
+  // SWIPE DOWN TO CLOSE
   if (!isZoomed) {
     totalDragY = e.touches[0].clientY - dragStartY;
-
-    if (totalDragY > 80) {
-      closeModal();
-    }
+    if (totalDragY > 90) closeModal();
   }
 }
 
 
-
-// ---------------- TOUCH END ----------------
+/* ------------------------------------------------------------
+   TOUCH END
+------------------------------------------------------------ */
 function touchEndHandler(e) {
 
-  // Zoom reset
   if (isZoomed) return;
 
   endX = e.changedTouches[0].clientX;
   const diff = startX - endX;
 
-  const SWIPE_MIN = 110;
-
   if (diff > SWIPE_MIN) nextImage();
-  if (diff < -SWIPE_MIN) prevImage();
+  else if (diff < -SWIPE_MIN) prevImage();
 }
 
 
-
-// ---------------- UPDATE TRANSFORM ----------------
+/* ------------------------------------------------------------
+   UPDATE IMAGE TRANSFORM
+------------------------------------------------------------ */
 function updateTransform() {
   modalImg.style.transform =
-    `translate(${imgX}px, ${imgY}px) scale(${Math.max(1, scale)})`;
+    `translate(${imgX}px, ${imgY}px) scale(${scale})`;
 }
 
 
-
-// ---------------- DOUBLE TAP ZOOM ----------------
+/* ------------------------------------------------------------
+   DOUBLE TAP ZOOM
+------------------------------------------------------------ */
 function toggleDoubleTapZoom(touch) {
   if (!isZoomed) {
-
     scale = 2;
     isZoomed = true;
 
-    // Center zoom around tap
     imgX = -(touch.clientX - window.innerWidth / 2);
     imgY = -(touch.clientY - window.innerHeight / 2);
 
   } else {
-    // Reset
-    scale = 1;
-    imgX = 0;
-    imgY = 0;
-    isZoomed = false;
+    resetZoom();
   }
-
   updateTransform();
 }
 
-// ---------- KEYBOARD SUPPORT ----------
-window.addEventListener("keydown", e => {
-  if (document.getElementById("myModal").style.display === "flex") {
-    if (e.key === "ArrowRight") nextImage();
-    if (e.key === "ArrowLeft") prevImage();
-    if (e.key === "Escape") closeModal();
-  }
-});
+
+/* ------------------------------------------------------------
+   NEXT & PREV IMAGE
+------------------------------------------------------------ */
+function nextImage() {
+  currentIndex = (currentIndex + 1) % galleryImages.length;
+  modalImg.src = galleryImages[currentIndex].full;
+  resetZoom();
+}
+
+function prevImage() {
+  currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+  modalImg.src = galleryImages[currentIndex].full;
+  resetZoom();
+}
 
 
-// ---------- SHARE BUTTON ----------
+/* ------------------------------------------------------------
+   DOWNLOAD IMAGE
+------------------------------------------------------------ */
+function downloadImage(url) {
+  fetch(url)
+    .then(r => r.blob())
+    .then(blob => {
+      const blobUrl = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = blobUrl;
+      a.download = url.split("/").pop();
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(blobUrl);
+    });
+}
+
+
+/* ------------------------------------------------------------
+   SHARE BUTTON
+------------------------------------------------------------ */
 const shareBtn = document.getElementById("shareBtn");
-
 shareBtn.onclick = async () => {
   const imgUrl = galleryImages[currentIndex].full;
 
@@ -301,21 +304,20 @@ shareBtn.onclick = async () => {
     try {
       await navigator.share({
         title: "Check this image!",
-        text: "Look at this photo from our gallery.",
         url: imgUrl
       });
-    } catch (err) {
-      console.error("Error sharing:", err);
-    }
+    } catch (_) {}
   } else {
-    navigator.clipboard.writeText(imgUrl).then(() => {
-      alert("Image link copied to clipboard!");
-    }).catch(() => {
-      alert("Failed to copy link.");
-    });
+    navigator.clipboard.writeText(imgUrl);
+    alert("Image link copied!");
   }
 };
 
 
-// ---------- PRELOAD BG ----------
-bgImages.forEach(url => { const img = new Image(); img.src = url; });
+/* ------------------------------------------------------------
+   PRELOAD BG IMAGES
+------------------------------------------------------------ */
+bgImages.forEach(url => {
+  const img = new Image();
+  img.src = url;
+});
