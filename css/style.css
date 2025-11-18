@@ -187,13 +187,44 @@
   z-index: 99999;
 }
 
-/* FORCE LARGE TEXT (override media queries) */
+/* Transparent Large Heading (Final Responsive Fix) */
 .header h1 {
-  font-size: 10em !important;  /* jitna chahe badha sakte ho */
   background: transparent !important;
   padding: 0 !important;
   color: transparent !important;
   border: none !important;
   -webkit-text-stroke: 4px white !important;
-  }  
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Desktop (large screens) */
+@media (min-width: 1200px) {
+  .header h1 {
+    font-size: 12em !important;
+  }
+}
+
+/* Tablets */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .header h1 {
+    font-size: 8em !important;
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .header h1 {
+    font-size: 5em !important;
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: 4em !important;
+    -webkit-text-stroke: 3px white !important;
+  }
+}
                    
