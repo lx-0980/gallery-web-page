@@ -18,7 +18,7 @@
   white-space: pre-wrap;
   word-break: break-word;
   border-right: .15em solid orange;
-  font-size: 6em; /* 3x bigger */
+  font-size: 2em;
   padding: 10px;
   background-color: rgba(0,0,0,0.6);
   border-radius: 5px;
@@ -28,11 +28,6 @@
 /* Blinking caret */
 .header h1.blink {
   animation: blink-caret 0.75s step-end infinite;
-}
-
-@keyframes blink-caret {
-  from, to { border-color: transparent; }
-  50% { border-color: orange; }
 }
 
 @keyframes blink-caret {
@@ -179,3 +174,5 @@
   max-height: 100%;
   object-fit: contain;
 }
+
+                   
