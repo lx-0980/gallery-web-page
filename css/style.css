@@ -166,7 +166,8 @@
   .gallery img { height: 150px; }
 }
 
-.modal-content {
+.modal-content,
+#modalImg {
   touch-action: none;
   transform-origin: center center !important;
   max-width: 100%;
