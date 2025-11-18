@@ -1,51 +1,19 @@
 // ---------- Background rotation images ----------
 const bgImages = [
-  "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-48-14.jpg",
-  "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-43-01.jpg",
-  "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-52-26.jpg",
-  "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-51-39.jpg",
-  "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-53-23.jpg",
-  "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-53-06.jpg",
-  "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-52-41.jpg",
-  "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-52-04.jpg",
-  "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-51-04.jpg",
-  "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-50-44.jpg",
-  "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-49-31.jpg",
-  "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-49-42.jpg",
-  "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-50-03.jpg",
-  "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-46-23.jpg",
-  "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-48-57.jpg",
-  "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-49-10.jpg",
-  "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-45-24.jpg",
-  "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-44-57.jpg",
-  "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-44-29.jpg",
-  "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-43-31.jpg",
-  "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-42-48.jpg",
-  "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-42-23.jpg"
+  "images/transition/transition1.jpg", 
+  "images/transition/transition2.jpg", 
+  "images/transition/transition3.jpg", 
+  "images/transition/transition4.jpg"
 ];
 
 // ---------- Gallery images ----------
 const galleryImages = [
-  { full: "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-48-14.jpg", date: "18 Feb 2025" },
-  { full: "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-43-01.jpg", date: "18 Feb 2025" },
-  { full: "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-52-26.jpg", date: "18 Feb 2025" },
-  { full: "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-51-39.jpg", date: "18 Feb 2025" },
-  { full: "images/Image-2025-02-19-17-53-23.jpg", date: "18 Feb 2025" },
-  { full: "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-53-06.jpg", date: "18 Feb 2025" },
-  { full: "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-52-41.jpg", date: "18 Feb 2025" },
-  { full: "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-52-04.jpg", date: "18 Feb 2025" },
-  { full: "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-51-04.jpg", date: "18 Feb 2025" },
-  { full: "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-50-44.jpg", date: "18 Feb 2025" },
-  { full: "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-49-31.jpg", date: "18 Feb 2025" },
-  { full: "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-49-42.jpg", date: "18 Feb 2025" },
-  { full: "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-50-03.jpg", date: "18 Feb 2025" },
-  { full: "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-46-23.jpg", date: "18 Feb 2025" },
-  { full: "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-48-57.jpg", date: "18 Feb 2025" },
-  { full: "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-49-10.jpg", date: "18 Feb 2025" },
-  { full: "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-45-24.jpg", date: "18 Feb 2025" },
-  { full: "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-44-57.jpg", date: "18 Feb 2025" },
-  { full: "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-44-29.jpg", date: "18 Feb 2025" },
-  { full: "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-43-31.jpg", date: "18 Feb 2025" },
-  { full: "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-42-48.jpg", date: "18 Feb 2025" },
-  { full: "https://raw.githubusercontent.com/kalxbjidbbxu/bdhididbjdhdbdh/refs/heads/main/images/Image-2025-02-19-17-42-23.jpg", date: "18 Feb 2025" }
+  { full: "images/image1.jpg", date: "18 Nov 2025" },
+  { full: "images/image2.jpg", date: "18 Nov 2025" },
+  { full: "images/image3.jpg", date: "18 Nov 2025" },
+  { full: "images/image4.jpg", date: "18 Nov 2025" },
+  { full: "images/image5.jpg", date: "18 Nov 2025" },
+  { full: "images/image6.jpg", date: "18 Nov 2025" },
+  { full: "images/image7.jpg", date: "18 Nov 2025" },
+  { full: "images/image8.jpg", date: "18 Nov 2025" }
 ];
