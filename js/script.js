@@ -2,7 +2,7 @@
    HEADER TYPING
 ------------------------------------------------------------ */
 document.addEventListener("DOMContentLoaded", () => {
-  const headerText = "राजकीय उच्च माध्यमिक विद्यालय अचलपुर, प्रतापगढ़ (राज) कक्षा 12वीं (2024 - 25)";
+  const headerText = "GOVT. SENIOR SECONDARY SCHOOL ACHALPUR, PRATAPGARH (RAJ.) CLASS 12TH (2024–25)";
   const header = document.querySelector(".header h1");
   let i = 0;
 
