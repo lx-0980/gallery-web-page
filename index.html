@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>School Gallery</title>
+
+  <!-- CSS -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -16,18 +18,22 @@
   <!-- Gallery -->
   <div class="gallery" id="galleryContainer"></div>
 
-  <!-- Modal for gallery images -->
+  <!-- Modal -->
   <div id="myModal" class="modal">
+
+    <!-- Close Button -->
     <span class="close" onclick="closeModal()">&times;</span>
 
     <!-- Navigation arrows -->
     <span class="modal-nav modal-prev" onclick="prevImage()">&#10094;</span>
     <span class="modal-nav modal-next" onclick="nextImage()">&#10095;</span>
 
-    <!-- Image -->
-    <img class="modal-content" id="modalImg">
+    <!-- Image Wrapper (IMPORTANT for zoom fix) -->
+    <div id="imgWrapper" class="img-wrapper">
+      <img class="modal-content" id="modalImg">
+    </div>
 
-    <!-- Buttons: Download + Share -->
+    <!-- Buttons -->
     <div class="modal-actions">
       <a id="downloadBtn" class="download-btn" download>Download Photo</a>
       <button id="shareBtn" class="share-btn">Share</button>
@@ -37,5 +43,6 @@
   <!-- JS Files -->
   <script src="js/images.js"></script>
   <script src="js/script.js"></script>
+
 </body>
 </html>
