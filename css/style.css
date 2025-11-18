@@ -187,27 +187,39 @@
   z-index: 99999;
 }
 
-/* --- Transparent Large Heading + Animation --- */
-.header h1 {
-  opacity: 0;                  /* start hidden */
-  transform: scale(0.8);       /* small zoom */
-  transition: opacity 1s ease, transform 1s ease;
-
-  /* Transparent style */
-  background: transparent !important;
-  padding: 0 !important;
-  color: transparent !important;
-  border: none !important;
-  -webkit-text-stroke: 4px white !important;
-  font-weight: 900;
-  line-height: 1;
-  white-space: nowrap;
+/* 3D Reveal Animation */
+@keyframes reveal3D {
+  0% {
+    opacity: 0;
+    transform: rotateX(70deg) translateY(40px) scale(0.7);
+  }
+  60% {
+    transform: rotateX(-10deg) translateY(-10px) scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: rotateX(0deg) translateY(0) scale(1);
+  }
 }
 
-/* When typing completes */
+/* Header H1 Base (transparent big text) */
+.header h1 {
+  opacity: 0;
+  transform: scale(0.7);
+  background: transparent !important;
+  padding: 0 !important;
+
+  color: transparent !important;
+  -webkit-text-stroke: 4px white !important;
+
+  font-weight: 900;
+  white-space: nowrap;
+  border: none !important;
+}
+
+/* Trigger 3D animation */
 .header h1.show {
-  opacity: 1;
-  transform: scale(1);
+  animation: reveal3D 1.4s ease-out forwards;
 }
 
 /* Desktop */
@@ -232,23 +244,3 @@
     -webkit-text-stroke: 3px white !important;
   }
 }
-
-/* 3D Reveal Animation */
-@keyframes reveal3D {
-  0% {
-    opacity: 0;
-    transform: rotateX(80deg) scale(0.8);
-  }
-  60% {
-    transform: rotateX(-20deg) scale(1.05);
-  }
-  100% {
-    opacity: 1;
-    transform: rotateX(0deg) scale(1);
-  }
-}
-
-/* Apply animation when .show class added */
-.header h1.show {
-  animation: reveal3D 1.2s ease-out forwards;
-}        
