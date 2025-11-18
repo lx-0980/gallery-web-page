@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Add animation class after slight delay
   setTimeout(() => {
-    header.classList.add("show-text");
+    header.classList.add("show");
   }, 200);
 });
 
