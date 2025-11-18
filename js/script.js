@@ -107,12 +107,17 @@ function prevImage() {
   document.getElementById("modalImg").src = galleryImages[currentIndex].full;
 }
 
-// ---------- Touch Swipe ----------
-function touchStart(e) { startX = e.changedTouches[0].screenX; }
+function touchStart(e) { 
+  if (e.touches.length > 1) return; // More than 1 finger = PICH ZOOM
+  startX = e.changedTouches[0].screenX;
+}
+
 function touchEnd(e) {
+  if (e.changedTouches.length > 1) return; // Prevent swipe on zoom
   endX = e.changedTouches[0].screenX;
-  if (startX - endX > 50) nextImage();      // swipe left
-  if (endX - startX > 50) prevImage();      // swipe right
+
+  if (startX - endX > 50) nextImage();  // swipe left
+  if (endX - startX > 50) prevImage();  // swipe right
 }
 
 // ---------- Keyboard Support ----------
