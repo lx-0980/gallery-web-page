@@ -1,18 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const headerText = "Lx 0980";
   const header = document.querySelector(".header h1");
-  let i = 0;
+  header.textContent = "LX 0980";
 
-  function typeWriter() {
-    if (i < headerText.length) {
-      header.innerHTML += headerText.charAt(i);
-      i++;
-      setTimeout(typeWriter, 50);
-    } else {
-      header.classList.add("blink");
-    }
-  }
-  typeWriter();
+  // Add animation class after slight delay
+  setTimeout(() => {
+    header.classList.add("show-text");
+  }, 200);
 });
 
 
