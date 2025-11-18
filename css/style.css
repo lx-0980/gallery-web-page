@@ -232,3 +232,23 @@
     -webkit-text-stroke: 3px white !important;
   }
 }
+
+/* 3D Reveal Animation */
+@keyframes reveal3D {
+  0% {
+    opacity: 0;
+    transform: rotateX(80deg) scale(0.8);
+  }
+  60% {
+    transform: rotateX(-20deg) scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: rotateX(0deg) scale(1);
+  }
+}
+
+/* Apply animation when .show class added */
+.header h1.show {
+  animation: reveal3D 1.2s ease-out forwards;
+}        
