@@ -12,31 +12,6 @@
   transition: background-image 2s ease-in-out;
 }
 
-.header h1 {
-  display: inline-block;
-  overflow: hidden;
-  white-space: pre-wrap;
-  word-break: break-word;
-
-  /* NEW SIZE */
-  font-size: 10em;  /* ← Jitna chaho badha sakte ho */
-
-  /* REMOVE background */
-  background-color: transparent;
-
-  /* REMOVE rounded border */
-  border-radius: 0;
-
-  /* REMOVE inner padding */
-  padding: 0;
-
-  /* Transparent text */
-  color: transparent;
-
-  /* Outline/Stroke for visibility */
-  -webkit-text-stroke: 4px orange;
-}
-
 /* Blinking caret */
 .header h1.blink {
   animation: blink-caret 0.75s step-end infinite;
@@ -211,4 +186,14 @@
   margin-bottom: 20px;
   z-index: 99999;
 }
+
+/* FORCE LARGE TEXT (override media queries) */
+.header h1 {
+  font-size: 10em !important;  /* jitna chahe badha sakte ho */
+  background: transparent !important;
+  padding: 0 !important;
+  color: transparent !important;
+  border: none !important;
+  -webkit-text-stroke: 4px white !important;
+  }  
                    
