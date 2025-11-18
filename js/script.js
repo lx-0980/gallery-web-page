@@ -130,17 +130,27 @@ function prevImage() {
 
 // Start
 function touchStartHandler(e) {
+
+  // Two finger pinch start
   if (e.touches.length === 2) {
     const dx = e.touches[0].pageX - e.touches[1].pageX;
     const dy = e.touches[0].pageY - e.touches[1].pageY;
     initialDistance = Math.sqrt(dx * dx + dy * dy);
-  } else if (!isZoomed && e.touches.length === 1) {
+    return;
+  }
+
+  // Single finger swipe start (ONLY when not zoomed)
+  if (!isZoomed && e.touches.length === 1) {
     startX = e.touches[0].clientX;
   }
 }
 
-// Move (Pinch Zoom)
+
+
+// Move
 function touchMoveHandler(e) {
+
+  // --- PINCH ZOOM ---
   if (e.touches.length === 2) {
     const dx = e.touches[0].pageX - e.touches[1].pageX;
     const dy = e.touches[0].pageY - e.touches[1].pageY;
@@ -148,38 +158,52 @@ function touchMoveHandler(e) {
 
     scale = newDistance / initialDistance;
 
-    if (scale > 1.05) isZoomed = true;
+    // Mark zoom active only if scale is actually bigger
+    if (scale > 1.03) isZoomed = true;
 
     modalImg.style.transform = `scale(${Math.max(1, scale)})`;
 
     e.preventDefault();
+    return;
+  }
+
+  // --- IMPORTANT: IF ZOOMED → DISABLE SWIPE ---
+  if (isZoomed) {
+    e.preventDefault();
+    return;
   }
 }
 
-// End (Reset Zoom OR Swipe)
+
+
+// End
 function touchEndHandler(e) {
 
-  // If zoomed — reset
+  // --- If zoom was active → reset to full screen automatically ---
   if (isZoomed) {
-    modalImg.style.transition = "transform 0.2s ease";
+    modalImg.style.transition = "transform 0.25s ease";
     modalImg.style.transform = "scale(1)";
     scale = 1;
     isZoomed = false;
 
     setTimeout(() => {
       modalImg.style.transition = "";
-    }, 200);
+    }, 250);
 
     return;
   }
 
-  // Swipe only when NOT zoomed
+  // --- Swipe Only When NOT Zoomed AND Single Finger ---
   if (e.changedTouches.length === 1) {
     endX = e.changedTouches[0].clientX;
+
     const diff = startX - endX;
 
-    if (diff > 100) nextImage();  // left swipe
-    if (diff < -100) prevImage(); // right swipe
+    // Require long swipe (100px)
+    const SWIPE_MIN = 100;
+
+    if (diff > SWIPE_MIN) nextImage();       // swipe left → next
+    else if (diff < -SWIPE_MIN) prevImage(); // swipe right → prev
   }
 }
 
