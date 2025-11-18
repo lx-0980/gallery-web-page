@@ -73,12 +73,17 @@ let currentIndex = 0;
 let startX = 0;
 let scale = 1;
 let startDistance = 0;
+
 let isZooming = false;
 let allowSwipe = true;
+
+let translateX = 0;
+let translateY = 0;
 
 const SWIPE_MIN = 120;
 const modal = document.getElementById("myModal");
 const modalImg = document.getElementById("modalImg");
+const imgWrapper = document.getElementById("imgWrapper");
 
 
 /* ------------------------------------------------------------
@@ -119,11 +124,14 @@ function closeModal() {
 ------------------------------------------------------------ */
 function resetZoom() {
   scale = 1;
+  translateX = 0;
+  translateY = 0;
+
   isZooming = false;
   allowSwipe = true;
 
   modalImg.style.transition = "transform 0.3s ease";
-  modalImg.style.transform = "scale(1)";
+  modalImg.style.transform = "translate(0px,0px) scale(1)";
 }
 
 
@@ -132,7 +140,7 @@ function resetZoom() {
 ------------------------------------------------------------ */
 function touchStart(e) {
 
-  // 👉 Pinch zoom start
+  // Pinch zoom start
   if (e.touches.length === 2) {
     isZooming = true;
     allowSwipe = false;
@@ -140,7 +148,7 @@ function touchStart(e) {
     return;
   }
 
-  // 👉 1 finger → start swipe
+  // 1 finger swipe start
   if (e.touches.length === 1) {
     startX = e.touches[0].clientX;
   }
@@ -158,20 +166,38 @@ function getDistance(t) {
 ------------------------------------------------------------ */
 function touchMove(e) {
 
-  // 👉 Pinch Zoom
+  // Pinch Zoom
   if (isZooming && e.touches.length === 2) {
     e.preventDefault();
 
     let newDist = getDistance(e.touches);
-    scale = Math.min(Math.max(newDist / startDistance, 1), 3); // clamp 1–3
+    scale = Math.min(Math.max(newDist / startDistance, 1), 3); // limit zoom 1–3
 
     modalImg.style.transition = "none";
-    modalImg.style.transform = `scale(${scale})`;
+    updateImageTransform();
     return;
   }
 
-  // Zoomed → disable swipe completely
+  // Zoomed → disable swipe fully
   if (scale > 1.02) return;
+}
+
+
+/* ------------------------------------------------------------
+   UPDATE TRANSFORM WITH BOUNDARY LOCK
+------------------------------------------------------------ */
+function updateImageTransform() {
+  const imgRect = modalImg.getBoundingClientRect();
+  const wrapRect = imgWrapper.getBoundingClientRect();
+
+  const maxX = ((imgRect.width * scale) - wrapRect.width) / 2;
+  const maxY = ((imgRect.height * scale) - wrapRect.height) / 2;
+
+  translateX = Math.min(Math.max(translateX, -maxX), maxX);
+  translateY = Math.min(Math.max(translateY, -maxY), maxY);
+
+  modalImg.style.transform =
+    `translate(${translateX}px, ${translateY}px) scale(${scale})`;
 }
 
 
@@ -180,11 +206,13 @@ function touchMove(e) {
 ------------------------------------------------------------ */
 function touchEnd(e) {
 
-  // 👉 After pinch zoom, auto reset
+  // After pinch zoom → auto reset (Instagram style)
   if (isZooming) {
     modalImg.style.transition = "transform 0.25s ease";
-    modalImg.style.transform = "scale(1)";
     scale = 1;
+    translateX = 0;
+    translateY = 0;
+    modalImg.style.transform = "translate(0px,0px) scale(1)";
 
     setTimeout(() => {
       allowSwipe = true;
@@ -194,8 +222,8 @@ function touchEnd(e) {
     return;
   }
 
-  // 👉 Swipe (only when NOT zoomed)
-  if (!allowSwipe) return;
+  // Swipe only if zoom = 1
+  if (!allowSwipe || scale > 1.02) return;
 
   let endX = e.changedTouches[0].clientX;
   let diff = startX - endX;
@@ -206,7 +234,7 @@ function touchEnd(e) {
 
 
 /* ------------------------------------------------------------
-   NEXT & PREV IMAGE
+   NEXT / PREV
 ------------------------------------------------------------ */
 function nextImage() {
   currentIndex = (currentIndex + 1) % galleryImages.length;
