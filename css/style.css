@@ -17,12 +17,24 @@
   overflow: hidden;
   white-space: pre-wrap;
   word-break: break-word;
-  border-right: .15em solid orange;
-  font-size: 2em;
-  padding: 10px;
-  background-color: rgba(0,0,0,0.6);
-  border-radius: 5px;
-  max-width: 90vw;
+
+  /* NEW SIZE */
+  font-size: 10em;  /* ← Jitna chaho badha sakte ho */
+
+  /* REMOVE background */
+  background-color: transparent;
+
+  /* REMOVE rounded border */
+  border-radius: 0;
+
+  /* REMOVE inner padding */
+  padding: 0;
+
+  /* Transparent text */
+  color: transparent;
+
+  /* Outline/Stroke for visibility */
+  -webkit-text-stroke: 4px orange;
 }
 
 /* Blinking caret */
