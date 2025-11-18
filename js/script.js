@@ -65,7 +65,7 @@ document.querySelectorAll(".gallery-item img").forEach(img => observer.observe(i
 
 
 /* ------------------------------------------------------------
-   MODAL + INSTAGRAM-STYLE SWIPE / ZOOM
+   MODAL + INSTAGRAM-STYLE ZOOM / SWIPE
 ------------------------------------------------------------ */
 
 let currentIndex = 0;
@@ -121,7 +121,7 @@ function closeModal() {
 
   modalImg.removeEventListener("touchstart", touchStartHandler);
   modalImg.removeEventListener("touchmove", touchMoveHandler);
-  modalImg.removeEventListener("touchend", touchEndHandler);
+  modalImg.removeEventListener("touchEnd", touchEndHandler);
 
   resetZoom();
 }
@@ -135,7 +135,26 @@ function resetZoom() {
   imgX = 0;
   imgY = 0;
   isZoomed = false;
-  modalImg.style.transform = "translate(0px, 0px) scale(1)";
+  updateTransform();
+}
+
+
+/* ------------------------------------------------------------
+   APPLY TRANSFORM WITH BOUNDARY LIMITS
+------------------------------------------------------------ */
+function updateTransform() {
+
+  const imgWidth = modalImg.naturalWidth * scale;
+  const imgHeight = modalImg.naturalHeight * scale;
+
+  const maxX = Math.max(0, (imgWidth - window.innerWidth) / 2);
+  const maxY = Math.max(0, (imgHeight - window.innerHeight) / 2);
+
+  imgX = Math.min(maxX, Math.max(-maxX, imgX));
+  imgY = Math.min(maxY, Math.max(-maxY, imgY));
+
+  modalImg.style.transform =
+    `translate(${imgX}px, ${imgY}px) scale(${scale})`;
 }
 
 
@@ -144,7 +163,7 @@ function resetZoom() {
 ------------------------------------------------------------ */
 function touchStartHandler(e) {
 
-  // Double TAP zoom
+  // Double Tap Zoom
   if (e.touches.length === 1) {
     const now = Date.now();
     if (modalImg.lastTapTime && now - modalImg.lastTapTime < 300) {
@@ -154,7 +173,7 @@ function touchStartHandler(e) {
     modalImg.lastTapTime = now;
   }
 
-  // Pinch zoom start
+  // Pinch start
   if (e.touches.length === 2) {
     const dx = e.touches[0].pageX - e.touches[1].pageX;
     const dy = e.touches[0].pageY - e.touches[1].pageY;
@@ -162,7 +181,7 @@ function touchStartHandler(e) {
     return;
   }
 
-  // 1 finger → swipe or pan
+  // 1 finger → swipe or drag
   if (e.touches.length === 1) {
     startX = e.touches[0].clientX;
     startY = e.touches[0].clientY;
@@ -183,19 +202,26 @@ function touchMoveHandler(e) {
 
   // PINCH ZOOM
   if (e.touches.length === 2) {
+
     const dx = e.touches[0].pageX - e.touches[1].pageX;
     const dy = e.touches[0].pageY - e.touches[1].pageY;
     const newDistance = Math.sqrt(dx * dx + dy * dy);
 
-    scale = Math.max(1, newDistance / initialDistance);
-    if (scale > 1.03) isZoomed = true;
+    scale = newDistance / initialDistance;
+    if (scale <= 1.03) {
+      resetZoom();
+      return;
+    }
+
+    isZoomed = true;
 
     updateTransform();
     e.preventDefault();
     return;
   }
 
-  // PAN (when zoomed)
+
+  // PAN when zoomed
   if (isZoomed && e.touches.length === 1) {
     const moveX = e.touches[0].clientX - startX;
     const moveY = e.touches[0].clientY - startY;
@@ -208,10 +234,11 @@ function touchMoveHandler(e) {
     return;
   }
 
+
   // SWIPE DOWN TO CLOSE
   if (!isZoomed) {
     totalDragY = e.touches[0].clientY - dragStartY;
-    if (totalDragY > 90) closeModal();
+    if (totalDragY > 100) closeModal();
   }
 }
 
@@ -221,6 +248,7 @@ function touchMoveHandler(e) {
 ------------------------------------------------------------ */
 function touchEndHandler(e) {
 
+  // If zoomed, no image swipe
   if (isZoomed) return;
 
   endX = e.changedTouches[0].clientX;
@@ -228,15 +256,6 @@ function touchEndHandler(e) {
 
   if (diff > SWIPE_MIN) nextImage();
   else if (diff < -SWIPE_MIN) prevImage();
-}
-
-
-/* ------------------------------------------------------------
-   UPDATE IMAGE TRANSFORM
------------------------------------------------------------- */
-function updateTransform() {
-  modalImg.style.transform =
-    `translate(${imgX}px, ${imgY}px) scale(${scale})`;
 }
 
 
@@ -268,7 +287,8 @@ function nextImage() {
 }
 
 function prevImage() {
-  currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+  currentIndex =
+    (currentIndex - 1 + galleryImages.length) % galleryImages.length;
   modalImg.src = galleryImages[currentIndex].full;
   resetZoom();
 }
@@ -301,15 +321,10 @@ shareBtn.onclick = async () => {
   const imgUrl = galleryImages[currentIndex].full;
 
   if (navigator.share) {
-    try {
-      await navigator.share({
-        title: "Check this image!",
-        url: imgUrl
-      });
-    } catch (_) {}
+    await navigator.share({ title: "Check this image!", url: imgUrl });
   } else {
     navigator.clipboard.writeText(imgUrl);
-    alert("Image link copied!");
+    alert("Link copied!");
   }
 };
 
