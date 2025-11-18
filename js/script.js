@@ -1,8 +1,5 @@
-/* ------------------------------------------------------------
-   HEADER TYPING
------------------------------------------------------------- */
 document.addEventListener("DOMContentLoaded", () => {
-  const headerText = "GOVT. SENIOR SECONDARY SCHOOL ACHALPUR, PRATAPGARH (RAJ.) CLASS 12TH (2024–25)";
+  const headerText = "Lx 0980";
   const header = document.querySelector(".header h1");
   let i = 0;
 
@@ -19,9 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-/* ------------------------------------------------------------
-   BACKGROUND ROTATION
------------------------------------------------------------- */
 let bgIndex = 0;
 function changeBackground() {
   document.getElementById("header").style.backgroundImage = `url('${bgImages[bgIndex]}')`;
@@ -30,9 +24,6 @@ function changeBackground() {
 setInterval(changeBackground, 2000);
 
 
-/* ------------------------------------------------------------
-   LOAD GALLERY
------------------------------------------------------------- */
 const galleryContainer = document.getElementById("galleryContainer");
 const fragment = document.createDocumentFragment();
 
@@ -48,9 +39,6 @@ galleryImages.forEach((item, index) => {
 galleryContainer.appendChild(fragment);
 
 
-/* ------------------------------------------------------------
-   LAZY LOADING
------------------------------------------------------------- */
 const observer = new IntersectionObserver((entries, obs) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -63,10 +51,6 @@ const observer = new IntersectionObserver((entries, obs) => {
 
 document.querySelectorAll(".gallery-item img").forEach(img => observer.observe(img));
 
-
-/* ------------------------------------------------------------
-   MODAL + PERFECT INSTAGRAM-STYLE ZOOM / SWIPE
------------------------------------------------------------- */
 
 let currentIndex = 0;
 
@@ -86,9 +70,6 @@ const modalImg = document.getElementById("modalImg");
 const imgWrapper = document.getElementById("imgWrapper");
 
 
-/* ------------------------------------------------------------
-   OPEN MODAL
------------------------------------------------------------- */
 function openModal(index) {
   currentIndex = index;
   modal.style.display = "flex";
@@ -105,9 +86,6 @@ function openModal(index) {
 }
 
 
-/* ------------------------------------------------------------
-   CLOSE MODAL
------------------------------------------------------------- */
 function closeModal() {
   modal.style.display = "none";
 
@@ -119,9 +97,6 @@ function closeModal() {
 }
 
 
-/* ------------------------------------------------------------
-   RESET ZOOM AUTO
------------------------------------------------------------- */
 function resetZoom() {
   scale = 1;
   translateX = 0;
@@ -135,9 +110,6 @@ function resetZoom() {
 }
 
 
-/* ------------------------------------------------------------
-   TOUCH START
------------------------------------------------------------- */
 function touchStart(e) {
 
   // Pinch zoom start
@@ -161,9 +133,6 @@ function getDistance(t) {
 }
 
 
-/* ------------------------------------------------------------
-   TOUCH MOVE
------------------------------------------------------------- */
 function touchMove(e) {
 
   // Pinch Zoom
@@ -183,9 +152,6 @@ function touchMove(e) {
 }
 
 
-/* ------------------------------------------------------------
-   UPDATE TRANSFORM WITH BOUNDARY LOCK
------------------------------------------------------------- */
 function updateImageTransform() {
   const imgRect = modalImg.getBoundingClientRect();
   const wrapRect = imgWrapper.getBoundingClientRect();
@@ -201,9 +167,6 @@ function updateImageTransform() {
 }
 
 
-/* ------------------------------------------------------------
-   TOUCH END
------------------------------------------------------------- */
 function touchEnd(e) {
 
   // After pinch zoom → auto reset (Instagram style)
@@ -233,9 +196,6 @@ function touchEnd(e) {
 }
 
 
-/* ------------------------------------------------------------
-   NEXT / PREV
------------------------------------------------------------- */
 function nextImage() {
   currentIndex = (currentIndex + 1) % galleryImages.length;
   modalImg.src = galleryImages[currentIndex].full;
@@ -249,9 +209,6 @@ function prevImage() {
 }
 
 
-/* ------------------------------------------------------------
-   DOWNLOAD IMAGE
------------------------------------------------------------- */
 function downloadImage(url) {
   fetch(url)
     .then(r => r.blob())
@@ -268,9 +225,6 @@ function downloadImage(url) {
 }
 
 
-/* ------------------------------------------------------------
-   SHARE BUTTON
------------------------------------------------------------- */
 const shareBtn = document.getElementById("shareBtn");
 shareBtn.onclick = async () => {
   const imgUrl = galleryImages[currentIndex].full;
@@ -284,9 +238,6 @@ shareBtn.onclick = async () => {
 };
 
 
-/* ------------------------------------------------------------
-   PRELOAD BG IMAGES
------------------------------------------------------------- */
 bgImages.forEach(url => {
   const img = new Image();
   img.src = url;
