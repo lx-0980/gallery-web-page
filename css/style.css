@@ -142,16 +142,6 @@
 /* Right half swipe area */
 .modal-swipe-right { right: 0; }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .header h1 { font-size: 1.8em; }
-  .gallery img { height: 200px; }
-}
-
-@media (max-width: 480px) {
-  .header h1 { font-size: 1.5em; }
-  .gallery img { height: 150px; }
-}
 
 .modal-content,
 #modalImg {
