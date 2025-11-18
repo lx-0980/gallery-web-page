@@ -125,13 +125,46 @@ function prevImage() {
   isZoomed = false;
 }
 
+/* ---------------- INSTAGRAM STYLE ZOOM + PAN + SWIPE ---------------- */
 
-// ---------- TOUCH HANDLERS ----------
+let startX = 0;
+let startY = 0;
+let endX = 0;
+let endY = 0;
 
-// Start
+let scale = 1;
+let isZoomed = false;
+let initialDistance = 0;
+
+let imgX = 0;     // Current pan X
+let imgY = 0;     // Current pan Y
+let lastX = 0;    // Previous pan X
+let lastY = 0;    // Previous pan Y
+
+let isDraggingImage = false;
+let dragStartY = 0; // For swipe-down to close
+let totalDragY = 0;
+
+const modal = document.getElementById("myModal");
+const modalImg = document.getElementById("modalImg");
+
+
+// ---------------- TOUCH START ----------------
 function touchStartHandler(e) {
 
-  // Two finger pinch start
+  // Double tap zoom
+  if (e.touches.length === 1) {
+    const now = Date.now();
+    if (modalImg.lastTapTime && (now - modalImg.lastTapTime < 300)) {
+      toggleDoubleTapZoom(e.touches[0]);
+      e.preventDefault();
+      return;
+    }
+    modalImg.lastTapTime = now;
+  }
+
+  
+  // 2-finger pinch start
   if (e.touches.length === 2) {
     const dx = e.touches[0].pageX - e.touches[1].pageX;
     const dy = e.touches[0].pageY - e.touches[1].pageY;
@@ -139,18 +172,26 @@ function touchStartHandler(e) {
     return;
   }
 
-  // Single finger swipe start (ONLY when not zoomed)
-  if (!isZoomed && e.touches.length === 1) {
+  // 1 finger → swipe or drag start
+  if (e.touches.length === 1) {
+
     startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+
+    dragStartY = startY;
+    totalDragY = 0;
+
+    lastX = imgX;
+    lastY = imgY;
   }
 }
 
 
 
-// Move
+// ---------------- TOUCH MOVE ----------------
 function touchMoveHandler(e) {
 
-  // --- PINCH ZOOM ---
+  // ----- PINCH ZOOM -----
   if (e.touches.length === 2) {
     const dx = e.touches[0].pageX - e.touches[1].pageX;
     const dy = e.touches[0].pageY - e.touches[1].pageY;
@@ -158,55 +199,87 @@ function touchMoveHandler(e) {
 
     scale = newDistance / initialDistance;
 
-    // Mark zoom active only if scale is actually bigger
-    if (scale > 1.03) isZoomed = true;
+    if (scale > 1.05) isZoomed = true;
 
-    modalImg.style.transform = `scale(${Math.max(1, scale)})`;
-
+    updateTransform();
+    
     e.preventDefault();
     return;
   }
 
-  // --- IMPORTANT: IF ZOOMED → DISABLE SWIPE ---
-  if (isZoomed) {
-    e.preventDefault();
+
+  // ----- WHEN ZOOMED → PAN IMAGE -----
+  if (isZoomed && e.touches.length === 1) {
+
+    const moveX = e.touches[0].clientX - startX;
+    const moveY = e.touches[0].clientY - startY;
+
+    imgX = lastX + moveX;
+    imgY = lastY + moveY;
+
+    updateTransform();
     return;
+  }
+
+
+  // ----- SWIPE DOWN TO CLOSE -----
+  if (!isZoomed) {
+    totalDragY = e.touches[0].clientY - dragStartY;
+
+    if (totalDragY > 80) {
+      closeModal();
+    }
   }
 }
 
 
 
-// End
+// ---------------- TOUCH END ----------------
 function touchEndHandler(e) {
 
-  // --- If zoom was active → reset to full screen automatically ---
-  if (isZoomed) {
-    modalImg.style.transition = "transform 0.25s ease";
-    modalImg.style.transform = "scale(1)";
-    scale = 1;
-    isZoomed = false;
+  // Zoom reset
+  if (isZoomed) return;
 
-    setTimeout(() => {
-      modalImg.style.transition = "";
-    }, 250);
+  endX = e.changedTouches[0].clientX;
+  const diff = startX - endX;
 
-    return;
-  }
+  const SWIPE_MIN = 110;
 
-  // --- Swipe Only When NOT Zoomed AND Single Finger ---
-  if (e.changedTouches.length === 1) {
-    endX = e.changedTouches[0].clientX;
-
-    const diff = startX - endX;
-
-    // Require long swipe (100px)
-    const SWIPE_MIN = 100;
-
-    if (diff > SWIPE_MIN) nextImage();       // swipe left → next
-    else if (diff < -SWIPE_MIN) prevImage(); // swipe right → prev
-  }
+  if (diff > SWIPE_MIN) nextImage();
+  if (diff < -SWIPE_MIN) prevImage();
 }
 
+
+
+// ---------------- UPDATE TRANSFORM ----------------
+function updateTransform() {
+  modalImg.style.transform =
+    `translate(${imgX}px, ${imgY}px) scale(${Math.max(1, scale)})`;
+}
+
+
+
+// ---------------- DOUBLE TAP ZOOM ----------------
+function toggleDoubleTapZoom(touch) {
+  if (!isZoomed) {
+
+    scale = 2;
+    isZoomed = true;
+
+    // Center zoom around tap
+    imgX = -(touch.clientX - window.innerWidth / 2);
+    imgY = -(touch.clientY - window.innerHeight / 2);
+
+  } else {
+    // Reset
+    scale = 1;
+    imgX = 0;
+    imgY = 0;
+    isZoomed = false;
+  }
+
+  updateTransform();
+}
 
 // ---------- KEYBOARD SUPPORT ----------
 window.addEventListener("keydown", e => {
